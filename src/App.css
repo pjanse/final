@@ -1,8 +1,17 @@
+
+#root{
+  background-color: rgb(134, 175, 250);
+}
 .App {
   text-align: center;
   background-color: rgb(134, 175, 250);
+  height: 100%;
+  width: 100%;
 }
-
+.About{
+  height: 100%;
+  width: 100;
+}
 .navbar{
   height: 100%;
   text-align: right;
@@ -23,6 +32,16 @@ button{
   background-color: transparent;
   border: none;
 }
+.mbutton{
+  color: black;
+  background-color: transparent;
+  border: none;
+}
+.mbutton:hover{
+  border: black;
+  color: rgb(129, 3, 3);
+}
+
 button:hover{
   border: orange;
   color: orange;
