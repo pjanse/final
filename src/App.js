@@ -14,20 +14,20 @@ class App extends React.Component{
               <nav>
                 <ul className = "navbar">
                   <li>
-                    <Link to="/"><button>Home</button></Link>
+                    <Link to="/final/"><button>Home</button></Link>
                   </li>
                   <li>
-                    <Link to="/about"><button>About page</button></Link>
+                    <Link to="/final/about"><button>About page</button></Link>
                   </li>
                   <li id='messageLink'>
-                    <Link to="/message"><button>Message Board</button></Link>
+                    <Link to="/final/message"><button>Message Board</button></Link>
                   </li>
                 </ul>
               </nav>
               <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route  path="/about" component={About}/>
-                <Route  path="/message" component={Message}/>
+                <Route exact path="/final/" component={Home}/>
+                <Route  path="/final/about" component={About}/>
+                <Route  path="/final/message" component={Message}/>
               </Switch>
             </Router>
           </div>
