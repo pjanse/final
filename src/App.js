@@ -14,13 +14,13 @@ class App extends React.Component{
               <nav>
                 <ul className = "navbar">
                   <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/"><button>Home</button></Link>
                   </li>
                   <li>
-                    <Link to="/about">Create page</Link>
+                    <Link to="/about"><button>About page</button></Link>
                   </li>
                   <li id='messageLink'>
-                    <Link to="/message">Message Board</Link>
+                    <Link to="/message"><button>Message Board</button></Link>
                   </li>
                 </ul>
               </nav>
