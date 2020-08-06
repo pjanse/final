@@ -26,8 +26,8 @@ class App extends React.Component{
               </nav>
               <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route exact path="/about" component={About}/>
-                <Route exact path="/message" component={Message}/>
+                <Route  path="/about" component={About}/>
+                <Route  path="/message" component={Message}/>
               </Switch>
             </Router>
           </div>
