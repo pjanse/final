@@ -1,43 +1,19 @@
 import React from 'react';
-import $ from 'jquery';
 import axios from "axios";
-import * as firebase from 'firebase';
-import config from './config.js';
 import '../Components/components.css';
 import '../App.css';
 
 class Message extends React.Component{
-    constructor () {
-        super();
-        // if(firebase.apps.length===0){
-        //     firebase.initializeApp(config);
-        //     this.database=this.app.database().ref().child('message');
-        // }
 
-        this.state = {
-            messages:[],
-            text: "",
-        }
+    state = {
+        keys:[],
+        messages:[],
+        text: "",
     }
-    // state = {
-    //     messages:[],
-    //     text: "",
-    // }
-    // gotData = (data) =>{
-    //     console.log(data);
-    // }
 
 
     componentDidMount() {
-        // this.getMessageHandle();
-        const root = firebase.database().ref().child('message');
-        const text = root.child('text');
-
-        text.on('value',snap=>{
-            this.setState({
-                messages:snap.val()
-            });
-        });
+        this.getMessageHandle();
     }
 
     inputHandle = (e) =>{
@@ -46,79 +22,59 @@ class Message extends React.Component{
         });
     }
 
-    // componentDidlMount(){
-    //     axios.get("https://frameworks-final.firebaseio.com/message.json",
-    //     ).then((res)=>{
-    //       console.log(res);
-    //       this.setState({messages: res.data});
-    //     }).catch((err)=>{
-    //       console.log(err);
-    //     });
-    // }
-
-    // componentDidUpdate(){
-    //     axios.get("https://frameworks-final.firebaseio.com/message.json",
-    //     ).then((res)=>{
-    //       console.log(Object.keys(res.data));
-    //       console.log(res.data);
-    //     //   this.setState({messages: Object.values(snapshot.val().category)})
-    //     this.setState({messages: res.data })
-    //     }).catch((err)=>{
-    //       console.log(err);
-    //     });
-    // }
-
     postMessageHandle = (input) => {
       axios.post("https://frameworks-final.firebaseio.com/message.json",{
           text: this.state.text,
       }).then((res)=>{
         console.log(res);
+        this.getLast();
       }).catch((err)=>{
         console.log(err);
       })
     };
-    
-    // addHandle=(i)=>{
-    //     this.setState((prevState)=> ({
-    //         messages:[
-    //             ...prevState.messages,
-    //             {theID: }
-    //         ]
-    //     }))
-    // }
+
+    getLast = () => {
+        axios.get("https://frameworks-final.firebaseio.com/message.json")
+        .then(({data})=>{
+            var key = Object.keys(data)[Object.keys(data).length-1];
+            this.setState((prevState)=>({
+                messages:[
+                    ...prevState.messages,
+                    data[key].text,
+                ]
+            }))
+        })
+        .catch((err)=> {
+            console.log(err);
+        })
+    }
+
     getMessageHandle = () => {  
         axios.get("https://frameworks-final.firebaseio.com/message.json")
         .then(({data})=>{
+            this.setState({
+                keys: Object.keys(data)
+            })
+            console.log(Object.keys(data));
+            console.log(Object.keys(data).length)
             console.log(data);
-            console.log(data.name);
-            // Object.keys(data).map((item,i)=>{
-            //     data[item].map((body,index)=>{
-            //         this.setState({mesages:body.text})
-            //     })
-            // });
-            // console.log(this.state.messages);
-        //     Object.keys(data).map((item,i)=>{
-        //             // data[item].map((body,index)=>{
-        //             //     this.setState({
-        //             //         messages: body.text,
-        //             //     })
-        //             //     )}
-        //             // })
+            for(var i = 0; i<Object.keys(data).length;i++){
+               var key = Object.keys(data)[i];
+                this.setState((prevState)=>({
+                    messages:[
+                        ...prevState.messages,
+                        data[key].text,
+                    ]
+                }))
+                console.log(this.state.messages[i]);
+            }
         })
-        .catch((err)=> {})
-        // .then(res=>{          
-        //   console.log(Object.keys(res.data));
-        //   console.log(res);
-        //   this.setState({messages: res});
-        //   Object.keys(this.state.messages);
-
-        // }).catch((err)=>{
-        //   console.log(err);
-        // });
+        .catch((err)=> {
+            console.log(err);
+        })
     }
 
     render(){
-        const {messages}=this.state;
         return(
         <div className='message'>
             <h1>Message Board</h1>
@@ -127,32 +83,13 @@ class Message extends React.Component{
                 <button className='mbutton' onClick={() =>this.postMessageHandle(this.state.text)}>Post Message</button>
             </div>
             <div className='text'>
-                {/* {this.state.messages.forEach(message =>
-                    {message.text})} */}
-                {/* {this.getMessageHandle()} */}
-                {/* messages.map(message=>) */}
-                {/* {Object.keys(this.state.messages).map((item,i)=>{
-                    <div key={i}>
-                        {this.state.messages[item].map((body,index)=>
-                            <div key={index}>{body.text} </div>
-                        )}
-                    </div>
-                })} */}
-                {/* {this.state.messages.map((message, Object.getKey(message)) => {
+                {this.state.messages.map((message,index) => {
                     return (
-                        <div key={index}>
-                            {message.body.text}
-                        </div>
-                    );
-                })} */}
-                {/* {this.state.messages} */}
-                {/* {this.state.messages.map((message, index) => {
-                    return (
-                        <div>
+                        <div key={index} id='message'>
                             {message}
                         </div>
                     );
-                })} */}
+                })}
             </div>
         </div>
         )

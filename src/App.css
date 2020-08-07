@@ -46,3 +46,11 @@ button:hover{
   border: orange;
   color: orange;
 }
+
+#message{
+  border: solid;
+  height: 20px;
+  text-align: left;
+  padding: 10px;
+  margin: 10px;
+}
